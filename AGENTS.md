@@ -58,3 +58,24 @@ lean --deps
 
 - Greenfield: No formalization yet
 - Coordinate with Orch-GroupAction for CI/release
+
+## GITIGNORE
+
+```
+# Lean build artifacts
+build/
+lake-packages/
+*.olean
+*.olean.lock
+
+# Editor
+.vscode/
+.DS_Store
+
+# Environment
+.env
+*.log
+
+# Dependencies
+Mathlib/  # Use mathlib as a dependency, don't commit
+```
