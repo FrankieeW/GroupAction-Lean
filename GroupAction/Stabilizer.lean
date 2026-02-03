@@ -48,7 +48,8 @@ def stabilizer (x : X) : Subgroup G := by
           GroupAction.act g⁻¹ x = GroupAction.act g⁻¹ (GroupAction.act g x) := by
             rw [hg]
           _ = GroupAction.act (g⁻¹ * g) x := by
-            simpa using (GroupAction.ga_mul g⁻¹ g x).symm
+            -- simpa using (GroupAction.ga_mul g⁻¹ g x).symm
+            rw [GroupAction.ga_mul g⁻¹ g x]
           _ = GroupAction.act (1 : G) x := by simp
           _ = x := GroupAction.ga_one x }
 

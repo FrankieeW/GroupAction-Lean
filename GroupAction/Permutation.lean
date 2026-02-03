@@ -41,6 +41,7 @@ def sigmaPerm (g : G) : Equiv.Perm X :=
         GroupAction.act g⁻¹ (GroupAction.act g x) =
             GroupAction.act (g⁻¹ * g) x := by
           simpa using (GroupAction.ga_mul g⁻¹ g x).symm
+          -- simp 【GroupAction.ga_mul】
         -- Step 2: simplify `g⁻¹ * g` to `1`.
         _ = GroupAction.act (1 : G) x := by
           -- Alternative: use `congrArg` with `inv_mul_cancel g`.
@@ -126,5 +127,5 @@ theorem group_action_to_perm_representation_apply
   φ g x = GroupAction.act g x :=
   -- By definition of hφ.
   hφ g x
-  
+
 #lint

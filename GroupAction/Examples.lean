@@ -4,8 +4,10 @@ Project: Project 1 (Group Actions)
 Author: Frankie Feng-Cheng WANG
 Date: June 2026
 Copyright (c) 2026 Frankie Feng-Cheng WANG. All rights reserved.
-Repository: https://github.com/FrankieeW/GroupAction
+Old Repo: https://github.com/FrankieeW/GroupAction
+New Repo: https://github.com/FrankieeW/GroupAction-Lean
 -/
+
 import GroupAction.Defs
 import GroupAction.Basic
 import Mathlib.Data.ZMod.Basic
@@ -74,12 +76,12 @@ instance subgroupAsGSetConjugation {G : Type*} [Group G] (H : Subgroup G) : Grou
   { act := fun h g => h * g * h⁻¹
     ga_mul := by
       intro g₁ g₂ g₃
-      simp
-      rw [← mul_assoc g₁]
-      rw [mul_assoc g₁ g₂]
-      rw [← mul_assoc]
+      -- simp
+      -- rw [← mul_assoc g₁]
+      -- rw [mul_assoc g₁ g₂]
+      -- rw [← mul_assoc]
       -- or just `rw [mul_assoc]`
-      -- simp [mul_assoc]
+      simp [mul_assoc]
     ga_one := by
       intros
       simp }
@@ -148,7 +150,7 @@ abbrev D4 := DihedralGroup 4
 
 /-- The action of D₄ on ZMod 4 representing vertices/sides/midpoints of a square. -/
 def d4Act (g : D4) (x : ZMod 4) : ZMod 4 :=
-  match g with
+  match g with -- fun g x => match g with
   -- Rotation r_i: x ↦ x - i
   | DihedralGroup.r i => x - i
   -- Reflection s_i: x ↦ i - x

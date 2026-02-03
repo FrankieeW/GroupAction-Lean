@@ -18,14 +18,16 @@ import Mathlib.GroupTheory.Perm.Basic
 The action is given by `act : G → X → X`,
 satisfying the axioms `ga_mul` and `ga_one`. -/
 class GroupAction (G : Type*) [Monoid G] (X : Type*) where
-  /-- The action function that applies a group element to an element of `X`. -/
+  /-- The action function that applies a group element to an element of `X`.
+  `G × X ->X` currying 
+  -/
   act : G → X → X
   /-- The multiplication axiom: `(g₁ * g₂) • x = g₁ • (g₂ • x)`. -/
   -- ga_mul : ∀ (g₁:G) (g₂:G) (x:X), act (g₁ * g₂) x = act g₁ (act g₂ x)
   ga_mul : ∀ g₁ g₂ x, act (g₁ * g₂) x = act g₁ (act g₂ x)
   /-- The identity axiom: `1 • x = x`. -/
   ga_one : ∀ x, act 1 x = x
-  
+
 variable {G : Type*} [Group G] {X : Type*} [GroupAction G X]
 #check G → (X → X)
 

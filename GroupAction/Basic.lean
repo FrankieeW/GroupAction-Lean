@@ -13,7 +13,7 @@ import GroupAction.Defs
 variable {G : Type*} [Group G] {X : Type*} [GroupAction G X]
 
 
--- theorem b
+-- theorem by definition
 theorem faithful_def {G : Type*} [Group G] {X : Type*} [GroupAction G X] :
     GroupAction.faithful (G := G) (X := X) ↔
       ∀ g₁ g₂ : G, (∀ x : X, GroupAction.act g₁ x = GroupAction.act g₂ x) → g₁ = g₂ :=
