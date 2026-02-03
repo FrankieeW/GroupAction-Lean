@@ -1,0 +1,6 @@
+{
+  "remotes": ["origin", "codeberg"],
+  "defaultBranch": "main",
+  "pushTags": false,
+  "parallel": false
+}
