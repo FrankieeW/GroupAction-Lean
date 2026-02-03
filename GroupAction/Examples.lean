@@ -12,14 +12,16 @@ import Mathlib.Data.ZMod.Basic
 import Mathlib.GroupTheory.SpecificGroups.Dihedral
 import Mathlib.Data.Real.Basic
 import Mathlib.Data.Complex.Basic
-
+import Init.Prelude
 -- /-!
 -- ## Example
 
 /-! ## Examples -/
 /-- The symmetric group `Equiv.Perm X` acts on `X` by evaluation. -/
 instance permGroupAction (X : Type*) : GroupAction (Equiv.Perm X) X :=
-  { act := fun g x => g x
+  {
+    --g is X -> X, so fun g x => g x is G->X->X
+    act := fun g x => g x
     ga_mul := by
       intro g1 g2 x
       rfl
@@ -39,9 +41,11 @@ theorem permGroupAction_transitive
   GroupAction.transitive (G := Equiv.Perm X) (X := X) :=
 by
   intro x₁ x₂
+  -- swap is a permutation that sends x₁ to x₂
   refine ⟨Equiv.swap x₁ x₂, ?_⟩
   simp [GroupAction.act]
---rmk: `[DecidableEq X]` is needed for `Equiv.swap`
+--rmk: `[DecidableEq X]` is needed for `Equiv.swap` (why?) or classical?
+--TODO:change to `classical` after project submission
 
 /-- A group acts on itself by left multiplication. -/
 instance groupAsGSet (G : Type*) [Group G] : GroupAction G G :=
@@ -74,6 +78,8 @@ instance subgroupAsGSetConjugation {G : Type*} [Group G] (H : Subgroup G) : Grou
       rw [← mul_assoc g₁]
       rw [mul_assoc g₁ g₂]
       rw [← mul_assoc]
+      -- or just `rw [mul_assoc]`
+      -- simp [mul_assoc]
     ga_one := by
       intros
       simp }
@@ -82,7 +88,7 @@ instance subgroupAsGSetConjugation {G : Type*} [Group G] (H : Subgroup G) : Grou
 
 /-- The multiplicative group of complex numbers acts on complex vectors by scalar multiplication. -/
 instance vectorSpaceAsCStarSet (n : ℕ) : GroupAction (ℂˣ) (Fin n → ℂ) :=
-  { act := fun r v => fun i => (r : ℂ) * v i
+  { act := fun r v => fun i => (r : ℂ) * (v i)
     ga_mul := by
       intros r1 r2 v
       ext i
@@ -93,6 +99,7 @@ instance vectorSpaceAsCStarSet (n : ℕ) : GroupAction (ℂˣ) (Fin n → ℂ) :
       simp }
 
 #check vectorSpaceAsCStarSet 3
+
 -- instance vectorSpaceAsRStarSet (n : ℕ) :
 --     GroupAction (ℝˣ) (Fin n → ℝ) :=
 --   -- using vectorSpaceAsCStarSet
@@ -130,14 +137,14 @@ The action on `ZMod 4` is defined by
 /-- The dihedral group D₄ of order 8, symmetry group of a square. -/
 abbrev D4 := DihedralGroup 4
 
-/-- Type alias for vertices of a square, indexed by ZMod 4. -/
-abbrev Vertex := ZMod 4
+-- /-- Type alias for vertices of a square, indexed by ZMod 4. -/
+-- abbrev Vertex := ZMod 4
 
-/-- Type alias for sides of a square, indexed by ZMod 4. -/
-abbrev Side := ZMod 4
+-- /-- Type alias for sides of a square, indexed by ZMod 4. -/
+-- abbrev Side := ZMod 4
 
-/-- Type alias for midpoints of sides of a square, indexed by ZMod 4. -/
-abbrev Midpoint := ZMod 4
+-- /-- Type alias for midpoints of sides of a square, indexed by ZMod 4. -/
+-- abbrev Midpoint := ZMod 4
 
 /-- The action of D₄ on ZMod 4 representing vertices/sides/midpoints of a square. -/
 def d4Act (g : D4) (x : ZMod 4) : ZMod 4 :=
@@ -147,16 +154,24 @@ def d4Act (g : D4) (x : ZMod 4) : ZMod 4 :=
   -- Reflection s_i: x ↦ i - x
   | DihedralGroup.sr i => i - x
 
+#check d4Act
+#check (d4Act)
+
 /-- The dihedral group D₄ acts on ZMod 4 (vertices of a square). -/
 instance d4ActionZMod4 : GroupAction D4 (ZMod 4) :=
   { act := d4Act
     ga_mul := by
       intro g1 g2 x
       cases g1 <;> cases g2 <;>
-        simp [d4Act, sub_eq_add_neg] <;> ring
+        simp [d4Act] <;>
+        ring
     ga_one := by
       intro x
       simp [DihedralGroup.one_def, d4Act, -DihedralGroup.r_zero]
+      -- by `rw` for details
+      -- rw [DihedralGroup.one_def]
+      -- rw [d4Act]
+      -- rw [sub_zero]
     }
 
 /-- The dihedral group D₄ acts trivially on the center point. -/
@@ -169,6 +184,10 @@ instance d4CenterAction : GroupAction D4 PUnit :=
       intros
       rfl }
 
+-- TODO: Implement the action of D4 on all points in the plane
+-- instance d4ActionAll :
+
+
 /-! ## Example: Symmetric group S₃ acting on {1,2,3} -/
 /-!
 The symmetric group on 3 elements acts transitively on `Fin 3`.
@@ -179,7 +198,7 @@ This is the standard example of a transitive group action.
 abbrev S3 := Equiv.Perm (Fin 3)
 
 /-- The symmetric group S₃ acts on the set {0,1,2} by permutation. -/
-instance s3ActionFin3 : GroupAction S3 (Fin 3) :=
+instance s3ActionFin3 : GroupAction (S3) (Fin 3) :=
   { act := fun g x => g x
     ga_mul := by
       intro g1 g2 x

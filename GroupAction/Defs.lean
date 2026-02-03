@@ -4,7 +4,11 @@ Project: Project 1 (Group Actions)
 Author: Frankie Feng-Cheng WANG
 Date: June 2026
 Copyright (c) 2026 Frankie Feng-Cheng WANG. All rights reserved.
-Repository: https://github.com/FrankieeW/
+Repository:
+  GitHub:https://github.com/FrankieeW/GroupAction-Lean
+  Codeberg: https://codeberg.org/FrankieW/GroupAction-Lean
+
+
 -/
 import Mathlib.Algebra.Group.Basic
 import Mathlib.GroupTheory.Perm.Basic
@@ -17,10 +21,13 @@ class GroupAction (G : Type*) [Monoid G] (X : Type*) where
   /-- The action function that applies a group element to an element of `X`. -/
   act : G → X → X
   /-- The multiplication axiom: `(g₁ * g₂) • x = g₁ • (g₂ • x)`. -/
+  -- ga_mul : ∀ (g₁:G) (g₂:G) (x:X), act (g₁ * g₂) x = act g₁ (act g₂ x)
   ga_mul : ∀ g₁ g₂ x, act (g₁ * g₂) x = act g₁ (act g₂ x)
   /-- The identity axiom: `1 • x = x`. -/
   ga_one : ∀ x, act 1 x = x
-
+  
+variable {G : Type*} [Group G] {X : Type*} [GroupAction G X]
+#check G → (X → X)
 
 /-! ## Definitions: act faithfully -/
 /-- A group action is faithful if different group elements
