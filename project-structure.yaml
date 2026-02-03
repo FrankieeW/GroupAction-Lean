@@ -2,31 +2,44 @@
 # Lean (Lean 4 Formalization)
 
 root: &root "/Users/fwmbam4/Documents/CodeHub"
+version: "1.0.0"
+updated: "2026-01-31"
+author: "Frankie F.-C. Wang"
+github: "FrankieeW"
+codeberg: "FrankieW"
+
 
 projects:
-  lean:
-    <<: *root
-    path: "Artefact/GroupAction/Lean"
-    purpose: "Lean 4 formalization"
-
   orchestration:
     <<: *root
+    name: "Orch-GroupAction"
     path: "Orchestration/GroupAction"
+    public: false
     purpose: "CI, scripts, coordination hub"
-
-  artefacts:
+  lean:
     <<: *root
-    path: "Artefact/GroupAction"
-    subprojects:
-      report:
-        path: "Report"
-        purpose: "LaTeX report generation"
-      slides:
-        path: "Slides"
-        purpose: "Beamer slides presentation"
-      pdf:
-        path: "PDF"
-        purpose: "PDF output compilation"
+    name: "GroupAction-Lean"
+    path: "Artefact/GroupAction/Lean"
+    public: false
+    purpose: "Lean 4 formalization"
+  report:
+    <<: *root
+    name: "GroupAction-Report"
+    path: "Artefact/GroupAction/Report"
+    public: false
+    purpose: "LaTeX report generation"
+  slides:
+    <<: *root
+    name: "GroupAction-Slides"
+    path: "Artefact/GroupAction/Slides"
+    public: false
+    purpose: "Beamer slides presentation"
+  pdf:
+    <<: *root
+    name: "GroupAction-PDF"
+    path: "Artefact/GroupAction/PDF"
+    public: false
+    purpose: "PDF output compilation"
 
 relative_paths:
   to_orchestration: "../../Orchestration/GroupAction"
