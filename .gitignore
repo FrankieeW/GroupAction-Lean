@@ -6,3 +6,4 @@ Mathlib/
 build/
 lake-packages/
 .vscode/
+.lake/
